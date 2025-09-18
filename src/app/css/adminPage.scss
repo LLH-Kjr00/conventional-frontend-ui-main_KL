@@ -1,0 +1,194 @@
+.enterAdminButton{
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  height: 100px;
+  width: 100px;
+
+  border: none;
+
+  background-color: transparent;
+}
+
+.adminPage{
+  height: 95%;
+  width: 95%;
+  background-color: $pale-green;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  font-family: "DejaVu Sans Mono";
+  color: $dark-brown;
+}
+.adminPageStatusBar{
+  position: relative;
+  height: 5%;
+  width: 90%;
+
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.adminPageReturnButton{
+  font-size: 5rem;
+  color: $theme-orange;
+  font-weight: bold;
+}
+.adminCountdownTimer{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+
+  font-size: 2.5rem;
+}
+.adminPageHeader{
+  font-size: 3.25rem;
+  font-weight: bold;
+}
+.adminPageDescription{
+  font-family: AnjaliOldLipi;
+  font-size: 2rem;
+}
+
+.inputPasswordArea{
+  height: 5%;
+  width: 70%;
+  overflow-x: auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+  border-radius: 20px;
+  border: 2px solid $dark-brown;
+
+  label{
+    font-size: 2rem;
+  }
+}
+
+.keyboardContainer{
+  width: 70%;
+  height: 40%;
+}
+
+.key{
+  width: 200px;
+  height: 200px;
+
+  border: none;
+
+  button{
+    width: 90%;
+    height: 80%;
+
+    background-color: $gray-purple-blue;
+    border-radius: 20px;
+    border: none;
+
+    color: white;
+    font-size: 3rem;
+  }
+  button:focus{
+    background-color: $theme-orange;
+    color: white;
+  }
+}
+
+.functionKey{
+  @extend .key;
+
+  button{
+    background-color: $light-gray;
+    color: $dark-brown;
+  }
+}
+
+.enter{
+  @extend .key;
+
+  height: 400px;
+
+  button {
+    background-color: $gray-green;
+    height : 90%
+  }
+}
+
+.adminPanelMenuContainer{
+  width: 90%;
+  height:60%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.adminPanelMenu{
+  width: 100%;
+  height: 200px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  button{
+    height: 100%;
+    width: 45%;
+
+    font-size: 2rem;
+
+    background-color: $gray-purple-blue;
+    border-radius: 20px;
+    border: none;
+    color: white;
+  }
+  button:focus{
+    background-color: $theme-orange;
+    color: white;
+  }
+}
+
+.customMessagePage{
+  width: 90%;
+  height:15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 2rem;
+
+  input{
+    height: 25%;
+    width: 70%;
+
+    font-size: 2rem;
+  }
+
+  button{
+    height: 20%;
+    width: 40%;
+
+    font-size: 2rem;
+
+    background-color: $gray-purple-blue;
+    border-radius: 20px;
+    border: none;
+    color: white;
+  }
+}
+

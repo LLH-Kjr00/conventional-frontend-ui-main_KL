@@ -1,0 +1,43 @@
+.vendingStatusWaiting{
+  padding-top: 2%;
+  padding-bottom: 2%;
+  width: 80%;
+  height: fit-content;
+
+  background-color: white;
+  border: 5px solid $theme-orange;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+
+  font-size: 1.5rem;
+
+  animation: fade-in 1s;
+}
+.vendingStatusWaitingDark{
+  @extend .vendingStatusWaiting;
+  background-color: $less-less-dark;
+  border: 5px solid $yellow;
+  color: white;
+}
+
+.vendingStatusFail{
+  @extend .vendingStatusWaiting;
+  border: 5px solid $error-pink;
+}
+.vendingStatusFailDark{
+  @extend .vendingStatusWaitingDark;
+  border: 5px solid $error-pink;
+}
+
+.vendingStatusSuccess{
+  @extend .vendingStatusWaiting;
+  border : 5px solid $dark-gray-green
+ }
+.vendingStatusSuccessDark{
+ @extend .vendingStatusWaitingDark;
+  border: 5px solid $pale-green;
+}

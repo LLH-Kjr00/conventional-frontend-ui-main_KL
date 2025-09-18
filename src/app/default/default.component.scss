@@ -1,0 +1,54 @@
+@import "../css/_color.scss";
+
+.main {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.testingButtonContainer{
+  position: fixed;
+  top: 100px;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+
+}
+.testingButtonContainer div{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.testingButtonContainer button{
+  width: fit-content;
+  height: 40px;
+
+  background-color: $gray-purple-blue;
+  border-style: none;
+
+  font-size: 1.25rem;
+}
+
+@import '../css/animation';
+@import '../css/loadingPage.scss';
+@import '../css/productPage.scss';
+@import "../css/adminPage.scss";
+
+
+
+
+
+
+
+
+
+
+
+

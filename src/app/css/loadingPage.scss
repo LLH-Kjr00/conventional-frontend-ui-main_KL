@@ -1,0 +1,36 @@
+.loadingPage {
+  height: 95%;
+  width: 95%;
+  background-color: $pale-green;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  font-family: "DejaVu Sans Mono";
+  color: $dark-brown;
+}
+.loadingHeader{
+  font-size: 3.25rem;
+  font-weight: bold;
+}
+.loadingSubHeader{
+  font-size: 2rem;
+}
+.loadingDescription{
+  font-family: AnjaliOldLipi;
+  font-size: 2.5rem;
+}
+.loader {
+  width: 80px;
+  height: 80px;
+
+  border: 15px solid  $dark-brown;
+  border-top: 15px solid white;
+  border-radius: 50%;
+
+  animation: spin 1s linear infinite;
+}
+

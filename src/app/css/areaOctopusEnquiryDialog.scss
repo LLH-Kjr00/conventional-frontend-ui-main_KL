@@ -1,0 +1,71 @@
+.octopusEnquiryDialog{
+  width: 80%;
+  height: fit-content;
+
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: white;
+  border: 5px solid $dark-gray-green;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;
+
+  animation: fade-in 1s;
+}
+.octopusEnquiryDialogDark {
+  @extend .octopusEnquiryDialog;
+
+  background-color: $less-less-dark;
+  border: 5px solid $pale-green;
+  color: white;
+}
+
+.octopusEnquiryDialog div{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+}
+.octopusEnquiryDialog div button{
+  width: 30%;
+  height: 60px;
+
+  background-color: $theme-orange;
+  border-style: none;
+
+  font-size: 1.5rem;
+  border-radius: 20px;
+}
+
+.octopusEnquiryDialogTitle{
+  font-size: 3rem;
+  font-weight: bold;
+  color: $theme-orange;
+}
+.octopusEnquiryDialogTitleDark{
+  @extend .octopusEnquiryDialogTitle;
+  color: $yellow;
+}
+.octopusEnquiryDialogBasic {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  font-size: 2.25rem;
+}
+.transactionTable{
+  width: 90%;
+
+  td{
+    text-align: center ;
+  }
+}
+

@@ -1,0 +1,141 @@
+{
+    "temperature": "現時溫度",
+    "humidity": "相對濕度",
+    "discount": "限時特價",
+    "closeDialog": "返回",
+    "productDescription": "產品描述",
+    "nutrition": "營養標籤",
+    "paymentMethod": "付款方式",
+    "scanToGetReceipt": "掃描以獲取收據",
+    "thankyou": "多謝",
+    "pleaseEnterPrice": "金額",
+    "pleaseChoosePaymentMethod":"請選擇付款方式",
+    "reSelectPaymentMethod": "取消付款",
+    "receipt": {
+        "title": "收據",
+        "receiptNo": "收據號碼",
+        "dateTime": "日期/時間",
+        "productPurchase": "購買產品",
+        "productPickUp": "提取產品",
+        "amountDeducted": "扣除金額",
+        "remainingValue": "餘額",
+        "refNo": "參考編號",
+        "cardId": "卡編號",
+        "transactionId": "交易號碼",
+      "schemeName" : "八達通 X 商戶優惠"
+    },
+    "octopus": {
+        "name": "八達通",
+        "hint": "請拍八達通付款",
+        "receipt": {
+            "lastAddType": {
+                "1": "現金增值",
+				"2": "網上增值",
+                "4": "自動增值"
+            },
+            "octopusNo": "八達通號碼",
+            "deviceNo": "機號",
+            "lastAdd": "上一次於",
+            "enquiry": "客戶如對上述的八達通交易有任何查詢，請保存此存根及致電八達通顧客服務熱線 2266 2222。"
+        },
+        "enquiry": {
+            "title": "查詢結果",
+            "no": "編號",
+            "cardID": "八達通卡號碼",
+            "remainingValue": "餘額",
+            "amount": "金額",
+            "devId": "機號",
+            "tranDttm": "交易時間"
+        }
+    },
+    "creditcard": {
+      "name": "信用卡",
+      "hint": "請拍信用卡付款",
+      "receipt": {
+        "date":"日期",
+        "time":"時間",
+        "batch No":"批次號",
+        "trace No":"流水號",
+        "mID":"商戶號",
+        "tID":"終端號",
+        "trans Type":"交易類型",
+        "card No":"卡號",
+        "exp Date":"有效期",
+        "card Type":"卡類別",
+        "app Code":"授權號",
+        "app Label":"APP Label",
+        "aID":"AID",
+        "tC":"TC",
+        "rRN":"參考號",
+        "total Amount":"總金額",
+        "signature":"簽名",
+        "no Signature Required":"無需簽名"
+      }
+    },
+    "tng": {
+        "name": "TNG",
+        "hint": "掃瞄二維碼以付款"
+    },
+    "alipay": {
+        "name": "支付寶",
+        "hint": "掃瞄二維碼以付款"
+    },
+    "wechat": {
+        "name": "微信支付",
+        "hint": "掃瞄二維碼以付款"
+    },
+    "employee": {
+        "name": "員工",
+        "hint": "請拍卡"
+    },
+    "vip": {
+        "name": "會員優惠",
+        "hint": "請拍八達通付款",
+        "receipt": {
+            "lastAddType": {
+                "1": "現金增值",
+				"2": "網上增值",
+                "4": "自動增值"
+            },
+            "octopusNo": "八達通號碼",
+            "deviceNo": "機號",
+            "lastAdd": "上一次於",
+            "enquiry": "客戶如對上述的八達通交易有任何查詢，請保存此存根及致電八達通顧客服務熱線 2266 2222。"
+        }
+    },
+    "weather": {
+        "iconDescription": {
+            "50": "天晴",
+            "51": "天晴",
+            "52": "天晴",
+            "53": "驟雨",
+            "54": "驟雨",
+            "60": "多雲",
+            "61": "密雲",
+            "62": "微雨",
+            "63": "雨",
+            "64": "大雨",
+            "65": "雷暴",
+            "70": "良好",
+            "71": "良好",
+            "72": "良好",
+            "73": "良好",
+            "74": "良好",
+            "75": "良好",
+            "76": "大致多雲",
+            "77": "大致良好",
+            "80": "大風",
+            "81": "乾燥",
+            "82": "潮濕",
+            "83": "霧",
+            "84": "薄霧",
+            "85": "煙霞",
+            "90": "熱",
+            "91": "暖",
+            "92": "涼",
+            "93": "凍"
+        }
+    },
+	"dark":"黑暗",
+	"light":"明亮"
+}

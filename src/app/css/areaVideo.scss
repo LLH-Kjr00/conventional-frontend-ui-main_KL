@@ -1,0 +1,9 @@
+.video {
+  height: 31.640625%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.video * {
+  height: 100%;
+}

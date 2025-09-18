@@ -1,0 +1,337 @@
+.productDialog{
+  box-sizing: border-box;
+  padding: 3% 3%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2%;
+
+  background-color: $light-gray;
+}
+.productDialogDark{
+  @extend .productDialog;
+  background-color: $less-dark;
+}
+
+
+.statusBar{
+  position: relative;
+  height: 5%;
+  width: 100%;
+
+  font-size: 2rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.statusBarDark{
+  @extend .statusBar;
+  color: white;
+}
+.returnButton {
+  display: flex;
+  flex-direction: row;
+  gap:10px
+}
+.countdownTimer {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: row;
+  gap:10px
+}
+
+.productInformationArea{
+  height: 62.5%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5%
+}
+.productErrorDialog{
+  height: fit-content;
+  width: 50%;
+
+  border: #be6e46 2px solid;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: white;
+
+  font-size: 2rem;
+
+  animation: fade-in 1s;
+}
+.errorArea {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  height: 50%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: $error-pink;
+
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.errorArea fa-icon{
+  font-size: 5rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.labelArea{
+  width: 100%;
+  padding: 5% 5%;
+  text-align: center;
+}
+.labelArea div{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+}
+.labelArea div button{
+  width: 30%;
+  height: 70px;
+
+  background-color: $theme-orange;
+  border-style: none;
+
+  font-size: 1.5rem;
+  border-radius: 20px;
+}
+
+.productDetails{
+  padding: 2% 2%;
+
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: white;
+
+  border-radius: 20px;
+
+  color: black;
+
+  animation: fade-in 1s;
+}
+.productDetails > :only-child {
+  justify-content: center; /* Center the single child */
+  flex-grow: 1; /* Allow it to take full width */
+  display: flex; /* Make it a flex container */
+  align-items: center; /* Center items vertically */
+  text-align: center; /* Center text horizontally */
+}
+.productDetailsDark{
+  @extend .productDetails;
+  background-color: $less-less-dark;
+  color: white;
+}
+
+.productDetails img{
+  width: 50%;
+  max-height: 100%;
+  height: auto;
+}
+.productText{
+  width: 45%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.productName{
+  font-size: 3rem;
+}
+.productPrice{
+  font-size:3rem;
+  color: $theme-orange;
+}
+.productPriceDark{
+  @extend .productPrice;
+  color: $yellow
+}
+.productDescription{
+  max-height: 50%;
+  width: 100%;
+  overflow-y: auto;
+
+  text-align: center;
+  font-size: 1.75rem;
+  color: $dark-brown
+}
+.productDescriptionDark{
+  @extend .productDescription;
+  color: $light-gray;
+}
+
+.paymentArea {
+  padding: 2% 2%;
+
+  height: 32.5%;
+  width: 100%;
+
+  background-color: white;
+
+  border-radius: 20px;
+
+  font-size: 2rem;
+
+  animation: fade-in 1s;
+}
+.paymentAreaDark{
+  @extend .paymentArea;
+  background-color: $less-less-dark;
+  color: white;
+}
+.allPayment {
+  width: 100%;
+  height: 75%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap:2%;
+}
+.paymentIconContainer{
+  width: 30%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid $dark-brown;
+}
+.paymentIconContainer img {
+  object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+}
+
+.paymentSelectedArea{
+  width: 100%;
+  height: 100%;
+}
+.paymentSelectedAreaStatusBar{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+
+.paymentHandlingArea {
+  width: 100%;
+  height: 70%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.paymentHandlingArea > :only-child {
+  flex-grow: 1; /* Allow it to take full width */
+  height: 100%;
+
+  display: flex; /* Make it a flex container */
+  justify-content: center; /* Center the single child */
+  align-items: center; /* Center items vertically */
+  gap: 2%;
+
+  text-align: center; /* Center text horizontally */
+
+}
+.paymentDescription{
+  width: fit-content;
+  font-family: "DejaVu Serif";
+  font-size: 2.5rem;
+}
+.octopusAnimation{
+  position: relative;
+
+  height: 90%;
+  width: 55%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.octopusCardReader{
+  height: 100%;
+  width: 60%;
+  background-color: #e8e870;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.octopusCardReader img{
+  max-height: 90%;
+  max-width: 90%;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+}
+.octopusCard{
+  position: absolute;
+  bottom: -30px; /* Position at the bottom */
+  right: -125px;  /* Position at the right */
+
+  max-height: 65%;
+  max-width: 65%;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+
+  transform: rotate(-40deg); /* Rotate the image */
+  transform-origin: left bottom; /* Set the pivot point for rotation */
+
+  animation: pollCard 2s infinite;
+
+  border: 2px solid white; /* Add a white border */
+  border-radius: 5px;
+}

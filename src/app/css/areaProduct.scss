@@ -1,0 +1,244 @@
+.productArea {
+  position: relative;
+  height: 63%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-family: "Khmer OS";
+}
+.productAreaDark {
+  @extend .productArea;
+  background: $less-dark;
+}
+
+.productPageLoader{
+  position: absolute;
+  top:50%;
+  transform: translate(-50%, -50%);
+
+  @extend .loader;
+}
+
+.tabArea {
+  padding-left: 2%;
+  padding-right: 2%;
+
+  width: 96%;
+  height: 7.5%;
+  overflow-x: scroll;
+
+  display: flex;
+  gap: 1.5%;
+
+  font-size: 1.75rem;
+  white-space: nowrap;
+  border-bottom: 5px solid $pale-green;
+}
+.tabAreaDark {
+  @extend .tabArea;
+  border-bottom: 5px solid $meat;
+}
+.tabArea::-webkit-scrollbar,
+.tabAreaDark::-webkit-scrollbar{
+  display: none;
+}
+
+.tabArea .tab,
+.tabArea .tabSelected,
+.tabAreaDark .tabDark,
+.tabAreaDark .tabSelectedDark{
+  padding-left: 20px;
+  padding-right: 20px;
+  z-index: 5;
+
+  height: 100%;
+  width: fit-content;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+.tab{
+  background-color: $gray-green;
+  color: white;
+}
+.tabDark{
+  background-color: $dark-gray-green;
+  color: white;
+}
+.tabSelected{
+  background-color: $pale-green;
+}
+.tabSelectedDark{
+  background-color: $meat;
+}
+
+.tab img,
+.tabSelected img,
+.tabDark img,
+.tabSelectedDark img{
+  max-height: 100%;
+  width: 80px;
+}
+
+
+.tabContent{
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 2%;
+  width: 96%;
+  height: 92.5%;
+  overflow-y: auto;
+
+  animation: fade-in 1s;
+
+  background-color: $light-gray;
+}
+.tabContentDark{
+  @extend .tabContent;
+  background-color: $less-dark;
+}
+
+.row {
+  margin-top: 20px;
+  height: 30%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cell{
+  padding-top: 1%;
+  padding-bottom: 1%;
+  width: 30%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 1.25rem;
+
+  background-color: white;
+
+  border-radius: 20px;
+}
+.cellDark{
+  @extend .cell;
+  background-color: #444444;
+}
+
+.card-price {
+  display: inline-block;
+
+  width: auto;
+  height: 38px;
+
+  background-color: $theme-orange;
+  -webkit-border-radius: 3px 4px 4px 3px;
+  -moz-border-radius: 3px 4px 4px 3px;
+  border-radius: 3px 4px 4px 3px;
+
+  border-left: 1px solid $theme-orange;
+  /* This makes room for the triangle */
+  margin-left: 19px;
+
+  position: relative;
+
+  color: white;
+  font-weight: 300;
+  font-size: 1.5rem;
+  line-height: 38px;
+  font-family: "Khmer OS";
+
+  padding: 0 10px 0 10px;
+}
+/* Makes the triangle */
+.card-price:before {
+  content: "";
+  position: absolute;
+  display: block;
+  left: -19px;
+  width: 0;
+  height: 0;
+  border-top: 19px solid transparent;
+  border-bottom: 19px solid transparent;
+  border-right: 19px solid $theme-orange;
+}
+/* Makes the circle */
+.card-price:after {
+  content: "";
+  background-color: white;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  display: block;
+  position: absolute;
+  left: -9px;
+  top: 17px;
+}
+
+
+.cellImg {
+  position: relative;
+  width: 85%;
+  height: 85%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.productIcon{
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;     /* Allow width to adjust automatically */
+  height: auto;    /* Allow height to adjust automatically */
+  object-fit: contain; /* Maintain aspect ratio while fitting within bounds */
+}
+.productIconDisable{
+  @extend .productIcon;
+  filter: grayscale(100%);
+}
+
+.cellName{
+  box-sizing: border-box;
+  padding: 2% 10%;
+  min-height: 50%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: $yellow;
+
+  border-inline: solid $dark-brown;
+  border-radius: 10px 100px / 120px;
+
+  font-size: 1.75rem;
+}
+
+
+.soldOut{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Adjust position to center */
+
+  max-width: 50%;
+  max-height: 50%;
+}
+
+
+@import "./areaProductDialog";
+@import "./areaReceiptDialog";
+@import "./areaVendingStatus";
+@import "./areaOctopusEnquiryDialog";

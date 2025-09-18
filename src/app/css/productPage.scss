@@ -1,0 +1,9 @@
+// Product Page showing video, products
+.productPage{
+  height: 100%;
+  width: 100%;
+}
+
+@import './areaVideo.scss';
+@import './areaManagement.scss';
+@import './areaProduct.scss';

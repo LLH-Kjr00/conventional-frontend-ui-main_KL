@@ -1,0 +1,73 @@
+.receipt{
+  width: 80%;
+  height: fit-content;
+
+  background-color: white;
+  border: 5px solid $dark-gray-green;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+
+  font-size: 1.5rem;
+
+  animation: fade-in 1s;
+}
+.receiptDark{
+ @extend .receipt;
+  background-color: $less-less-dark;
+  border: 5px solid $pale-green;
+  color: white;
+}
+.receiptTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  color: $theme-orange;
+}
+.receiptTitleDark{
+  @extend .receiptTitle;
+  color: $yellow;
+}
+
+.receiptDetail{
+  width: 90%;
+  font-size: 1.75rem;
+}
+.receiptDetail div{
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.receiptRemark {
+  font-size: 1.5rem;
+}
+
+.receiptFooter{
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.receiptFooter *{
+  flex: 1;
+}
+.thankyou {
+  font-size: 3rem;
+  text-align: center;
+}
+.qrCode{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.printData{
+  width: 50%;
+  word-wrap: break-word;
+  font-size: 1rem;
+}

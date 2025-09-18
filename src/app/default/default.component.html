@@ -1,0 +1,545 @@
+<main class="main">
+    <!--Loading Page before connecting with local backend by web sockect-->
+    <div class="loadingPage" *ngIf="!loaded">
+        <div class="loader"></div>
+        <div class="loadingDescription">Loading ... Please Wait ... </div>
+        <div></div>
+        <div class="loadingHeader">Smart Vending System</div>
+        <div class="loadingSubHeader">powered by</div>
+        <div class="loadingSubHeader">Clever Motion Limited</div>
+        <div class="testingButtonContainer" *ngIf="devMode">
+            <button (click)="loaded=!loaded" >Load / Unload</button>
+        </div>
+    </div>
+    <!--Product Page showing the product options and video-->
+    <div class="productPage" *ngIf="loaded && !adminController.passwordPage.displayed && !adminController.adminPanel.displayed">
+        <!--Area playing video-->
+        <div class="video">
+            <img *ngIf="!videoController.videos.readyToPlay" [src]="mediaController.getMediaFilePath('default')" alt="Loading"/>
+            <video *ngIf="videoController.videos.readyToPlay"
+            [src]="mediaController.getPlaylistFilePath(videoController.videos.currentVideoId)"
+            (ended)="videoController.loadPlaylistVideo()"
+            autoplay muted>
+            </video>
+        </div>
+        <!--End of Area playing video-->
+        <button [longPress]="3000" class="enterAdminButton" (mouseLongPress)="adminController.openPasswordPage()"></button>
+        <div class="testingButtonContainer" *ngIf="devMode">
+            <div>
+                <button (click)="loaded=!loaded" >Load / Unload</button>
+                <button (click)="test.videoTesting()" >Play / Stop Video</button>
+            </div>
+            <div>
+                <button (click)="test.test1()">Product Set 1</button>
+                <button (click)="test.clearProduct()">Clear Product</button>
+                <button (click)="test.selectProductSuccessResponse()">Select Product Success</button>
+                <button (click)="test.selectProductErrorResponse()">Select Product Error</button>
+                <button (click)="test.selectProductSuccessResponseOctopusOnly()">Select Product Success (OctopusOnly)</button>
+            </div>
+            <div>
+                <button (click)="test.selectProductPaymentSuccessResponse()">Select Payment Success</button>
+                <button (click)="test.selectProductPaymentErrorResponse()">Select Payment Error</button>
+                <button (click)="test.unselectProductResponse()">Unselect Payment Success</button>
+            </div>
+            <div>
+                <button (click)="test.octopusReaderNotNormalError()">Octopus Reader Not Normal</button>
+                <button (click)="test.octopusResetLockDialogCountdown()">Octopus Reset Lock Error</button>
+                <button (click)="test.octopusLockDialogCountdown()">Octopus Lock Error</button>
+                <button (click)="test.octopus3waitTime()">180</button>
+                <button (click)="test.octopus3retry()">retry</button>
+                <button (click)="test.octopus3processing()">processing</button>
+            </div>
+            <div>
+                <button (click)="test.wechatQRCode()">Wechat</button>
+                <button (click)="test.alipayQRCode()">Alipay</button>
+                <button (click)="test.alipayQRCodeError()">Alipay Fail</button>
+            </div>
+            <div>
+                <button (click)="test.transactionComplete()">Transaction Complete</button>
+                <button (click)="test.washingMachineWait1()">Washing MC Waiting 1</button>
+                <button (click)="test.washingMachineFail()">Washing MC Fail</button>
+            </div>
+            <div>
+                <button (click)="test.octopusEnquiryStatusResponse()">Octopus Enquiry</button>
+                <button (click)="test.octopusEnquiryResultResponse()">Octopus Enquiry Result</button>
+            </div>
+        </div>
+        <!--Area showing logo, time, language, display mode-->
+        <div [ngClass]="'managementArea'+uiController.displayMode">
+            <img [src]="mediaController.getMediaFilePath('logo')" alt="Logo"/>
+            <div class="dateTimeAndChangeLanguageArea">
+                <label class="dateTime">{{ uiController.date | date: 'yyyy-MM-dd' }}&nbsp;&nbsp;{{ uiController.date | date: 'HH:mm:ss' }}</label>
+                <button [ngClass]="uiController.language === 'zh' ? 'changeLanguageButtonSelected'+uiController.displayMode : 'changeLanguageButton'"
+                (click)="uiController.changeLanguage('zh')">
+                中文
+                </button>
+                <button [ngClass]="uiController.language === 'en' ? 'changeLanguageButtonSelected'+uiController.displayMode : 'changeLanguageButton'"
+                (click)="uiController.changeLanguage('en')">
+                Eng
+                </button>
+                <div class="changeDisplayModeArea">
+                    <fa-icon class="darkIcon" *ngIf="uiController.displayMode=='Dark'" [icon]="faMoon"></fa-icon>
+                    <fa-icon class="lightIcon" *ngIf="uiController.displayMode==''" [icon]="faSun"></fa-icon>
+                    <input  type="checkbox" (change)="uiController.changeDisplayMode()" />
+                </div>
+            </div>
+        </div>
+        <!--End of Area showing logo, time, language, display mode-->
+        <!--Area showing products-->
+        <div [ngClass]="'productArea'+uiController.displayMode">
+            <div class="productPageLoader"  *ngIf="!uiController.tabs"></div>
+            <!--Tab Bar-->
+            <div [ngClass]="'tabArea'+uiController.displayMode" *ngIf="uiController.tabs" >
+            <div [ngClass]="uiController.currentTab == tab ? 'tabSelected'+uiController.displayMode : 'tab'+uiController.displayMode" *ngFor="let tab of uiController.tabs?.customTabs"
+            (click)="uiController.loadTab(tab)">
+            <img *ngIf="tab.iconDownloaded" [src]="mediaController.getTabIconFilePath(tab.icon)" alt="Loading"/>
+            <label *ngIf="uiController.language =='en'">{{tab.label}}</label>
+            <label *ngIf="uiController.language =='zh'">{{tab.labelChi}}</label>
+        </div>
+        <div [ngClass]="uiController.currentTab == uiController.tabs.allTab ? 'tabSelected'+uiController.displayMode : 'tab'+uiController.displayMode" *ngIf="uiController.tabs.allTab"
+        (click)="uiController.loadTab(uiController.tabs.allTab)">
+        <img [src]="mediaController.getMediaFilePath('default')" alt="Loading"/>
+        <label *ngIf="uiController.language =='en'">{{uiController.tabs.allTab.label}}</label>
+        <label *ngIf="uiController.language =='zh'">{{uiController.tabs.allTab.labelChi}}</label>
+    </div>
+    </div>
+    <!--End of Tab Bar-->
+    <!--Tab Content : Custom Tab-->
+    <ng-container *ngFor="let tab of uiController.tabs?.customTabs">
+        <div [ngClass]="'tabContent'+uiController.displayMode" *ngIf="uiController.currentTab == tab">
+        <div class="row" *ngFor="let row of tab.rows">
+            <div [ngClass]="'cell'+uiController.displayMode" *ngFor="let cell of row.cells">
+            <div class="cellImg"  (click)="productController.openProductDialog(cell)">
+                <img [ngClass]="(!cell.enabled || cell.notInUse) ?'productIconDisable':'productIcon'" *ngIf="cell.iconDownloaded" [src]="mediaController.getProductIconPath(cell.icon)" alt="Loading">
+                <img class="soldOut" *ngIf="!cell.enabled" [src]="mediaController.getMediaFilePath('soldout')" alt="Sold Out">
+                <img class="soldOut" *ngIf="cell.notInUse" [src]="mediaController.getMediaFilePath('notInUse')" alt="Not In Use">
+                <div [ngClass]="'cellName'" *ngIf="!cell.iconDownloaded && uiController.language == 'en'" >{{cell.name}}
+            </div>
+            <div [ngClass]="'cellName'" *ngIf="!cell.iconDownloaded && uiController.language == 'zh'" >{{cell.nameChi}}
+        </div>
+        </div>
+        <div class="card-price">
+            $ {{cell.price}}
+        </div>
+        </div>
+        </div>
+        </div>
+    </ng-container>
+    <!--End of Tab Content : Custom Tab-->
+    <!--Tab Content : All Tab-->
+    <div [ngClass]="'tabContent'+uiController.displayMode" *ngIf="uiController.currentTab == uiController.tabs?.allTab">
+    <div class="row" *ngFor="let row of uiController.tabs?.allTab?.rows">
+        <div [ngClass]="'cell'+uiController.displayMode" *ngFor="let cell of row.cells">
+        <div class="cellImg" (click)="productController.openProductDialog(cell)">
+            <img [ngClass]="(!cell.enabled || cell.notInUse) ?'productIconDisable':'productIcon'"  *ngIf="cell.iconDownloaded" [src]="mediaController.getProductIconPath(cell.icon)" alt="Loading" >
+            <img class="soldOut" *ngIf="!cell.enabled" [src]="mediaController.getMediaFilePath('soldout')" alt="Sold Out">
+            <img class="soldOut" *ngIf="cell.notInUse" [src]="mediaController.getMediaFilePath('notInUse')" alt="Not In Use">
+            <div [ngClass]="'cellName'" *ngIf="!cell.iconDownloaded && uiController.language == 'en'" >{{cell.name}}
+        </div>
+        <div [ngClass]="'cellName'" *ngIf="!cell.iconDownloaded && uiController.language == 'zh'" >{{cell.nameChi}}
+    </div>
+    </div>
+    <div class="card-price">
+        $ {{cell.price}}
+    </div>
+    </div>
+    </div>
+    </div>
+    <!--End of Tab Content : All Tab-->
+    <!--Product Dialog-->
+    <div [ngClass]="'productDialog'+uiController.displayMode" *ngIf="productController.productDialog">
+    <div [ngClass]="'statusBar'+uiController.displayMode">
+        <!--The return button to all product page, Trigger immediately -->
+        <div class="returnButton" (click)="productController.closeProductDialog()" *ngIf="!productController.paymentSelected">
+        <fa-icon [icon]="faChevronLeft"></fa-icon>
+        <label>{{"closeDialog" | translate}}</label>
+    </div>
+    <!--The return button to leave payment processing page, Need to wait for Backend response-->
+    <div class="returnButton" (click)="productController.tryToClosePayment()"
+    *ngIf="productController.paymentSelected
+    && !productController.paymentSelected.lockDialog
+    && !productController.productDialog.error
+    && !productController.productDialog.otherError
+    && !productController.productDialog.askRetry">
+    <fa-icon [icon]="faChevronLeft"></fa-icon>
+    {{"reSelectPaymentMethod" | translate}}
+    </div>
+    <!--The return button to leave payment error page when the error dialog is unlocked-->
+    <div class="returnButton" (click)="productController.resetError()"
+    *ngIf="productController.paymentSelected
+    && !productController.paymentSelected.lockDialog
+    && productController.productDialog.error
+    && !productController.productDialog.askRetry">
+    <fa-icon [icon]="faChevronLeft"></fa-icon>
+    {{"reSelectPaymentMethod" | translate}}
+    </div>
+    <!--The return button to leave payment error page and close the payment, Trigger immediately -->
+    <div class="returnButton" (click)="productController.closePayment()"
+    *ngIf="productController.paymentSelected
+    && !productController.paymentSelected.lockDialog
+    && productController.productDialog.otherError
+    && !productController.productDialog.askRetry">
+    <fa-icon [icon]="faChevronLeft"></fa-icon>
+    {{"reSelectPaymentMethod" | translate}}
+    </div>
+    <div class="countdownTimer">
+        <fa-icon [icon]="faClockRotateLeft"></fa-icon>
+        <label>{{productController.productDialog.countdown}} s</label>
+    </div>
+    </div>
+    <!--When product information not obtained, showing the loader-->
+    <div class="productPageLoader"  *ngIf="!productController.productDialog.inited"> </div>
+    <!--Area showing the selected product information-->
+    <div [ngClass]="'productInformationArea'" *ngIf="productController.productDialog.inited">
+    <!--If there is error-->
+    <div class="productErrorDialog" *ngIf="productController.productDialog.error || productController.productDialog.otherError ">
+        <div class="errorArea">
+            <fa-icon [icon]="faXmark"></fa-icon>
+        </div>
+        <!--For Octopus 3 to handle retry -->
+        <div class="labelArea">
+            <label [innerHTML]="uiController.language == 'en' ? productController.productDialog.errorMsg: productController.productDialog.errorMsgChi"></label>
+            <div *ngIf="productController.productDialog.askRetry">
+                <button (click)="productController.handleOctopus3Retry()" > {{uiController.language == 'en' ? "Yes": "是"}}</button>
+                <button (click)="productController.handleOctopus3notRetry()">{{uiController.language == 'en' ? "Cancel": "取消"}}</button>
+            </div>
+        </div>
+    </div>
+    <div [ngClass]="'productDetails'+uiController.displayMode" *ngIf="!productController.productDialog.error && !productController.productDialog.otherError">
+    <img *ngIf="productController.productDialog.cell.imageDownloaded" [src]="mediaController.getProductImagePath(productController.productDialog.cell.image)" alt="Loading"/>
+    <div  class="productText">
+        <label class="productName" >{{ uiController.language == 'en' ? productController.productDialog.cell.name : productController.productDialog.cell.nameChi}}</label>
+        <label [ngClass]="'productPrice'+uiController.displayMode">$ {{productController.productDialog.cell.price.toFixed(1)}}</label>
+        <label [ngClass]="'productDescription'+uiController.displayMode">{{uiController.language == 'en' ? productController.productDialog.cell.description : productController.productDialog.cell.descriptionChi}}</label>
+    </div>
+    </div>
+    </div>
+    <!--End of Area showing the selected product information-->
+    <!--Area showing all payment method and payment description-->
+    <div [ngClass]="'paymentArea'+uiController.displayMode" *ngIf="productController.productDialog.inited && !productController.productDialog.error && !productController.productDialog.otherError">
+    <label *ngIf="!productController.paymentSelected">{{"pleaseChoosePaymentMethod" | translate}} : </label>
+    <!--Area showing all available payment methods for this product-->
+    <div  class="allPayment" *ngIf="!productController.paymentSelected" >
+        <ng-container *ngFor="let payment of productController.getAllowedPayment()">
+            <div class="paymentIconContainer" (click)="productController.openPayment(payment)">
+                <img src="{{mediaController.getPaymentIconPath(payment.name)}}">
+            </div>
+        </ng-container>
+    </div>
+    <!--If a payment is selected, this area will show the payment description of this payment-->
+    <div class="paymentSelectedArea" *ngIf="productController.paymentSelected">
+        <div class="paymentSelectedAreaStatusBar" >
+            <label>
+            <label >{{"paymentMethod" | translate}} : </label>
+            <label [ngClass]="'productPrice'+uiController.displayMode"> {{productController.paymentSelected.name +".name" | translate}} </label>
+            </label>
+        </div>
+        <div class="paymentHandlingArea" >
+            <div  *ngIf="!productController.paymentSelected.inited">
+                <div class="loader"> </div>
+            </div>
+            <div *ngIf="productController.paymentSelected.inited">
+                <div class="paymentDescription" >
+                    <label>{{productController.paymentSelected.name+".hint" | translate}} : </label>
+                </div>
+                <div class="octopusAnimation" *ngIf="productController.paymentSelected.inited && productController.paymentSelected.name == 'octopus'">
+                    <div class="octopusCardReader">
+                        <img src="{{mediaController.getPaymentIconPath('octopusCardReader')}}" alt="">
+                    </div>
+                    <img class="octopusCard" src="{{mediaController.getPaymentIconPath('octopusCard')}}" alt="">
+                </div>
+                <div *ngIf="productController.paymentSelected.inited && productController.paymentSelected.qrCodePayment">
+                    <qrcode [qrdata]="productController.paymentSelected.qrcode" *ngIf="productController.paymentSelected.qrcode" [width]="256"></qrcode>
+                    <div class="loader"  *ngIf="!productController.paymentSelected.qrcode" ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--The end of Area showing all payment method and payment description-->
+    </div>
+    <!--The end of Product Dialog-->
+    <!--Receipt Dialog-->
+    <div [ngClass]="'productDialog'+uiController.displayMode" *ngIf="receiptController.receiptDialog">
+    <div [ngClass]="'statusBar'+uiController.displayMode">
+        <div class="returnButton" *ngIf="receiptController.receiptDialog.countdown <= receiptController.receiptDialog.closableValue" (click)="receiptController.closeReceiptDialog()" >
+        <fa-icon [icon]="faChevronLeft"></fa-icon>
+        {{"closeDialog" | translate}}
+    </div>
+    <div class="countdownTimer">
+        <fa-icon [icon]="faClockRotateLeft"></fa-icon>
+        <label>{{receiptController.receiptDialog.countdown}} s</label>
+    </div>
+    </div>
+    <div [ngClass]="'receipt'+uiController.displayMode">
+        <div [ngClass]="'receiptTitle'+uiController.displayMode">{{"receipt.title" | translate}}</div>
+        <div class="receiptDetail" *ngIf="receiptController.receiptDialog.tranInfo">
+            <div *ngIf="receiptController.receiptDialog.tranInfo.receiptNo">
+                <label>{{"receipt.receiptNo" | translate}}</label>
+                <label>{{receiptController.receiptDialog.tranInfo.receiptNo}}</label>
+            </div>
+            <div *ngIf="receiptController.receiptDialog.tranInfo.transactionId">
+                <label>{{"receipt.transactionId" | translate}}</label>
+                <label>{{receiptController.receiptDialog.tranInfo.transactionId}}</label>
+            </div>
+            <div>
+                <label>{{"receipt.dateTime" | translate}}</label>
+                <label>{{receiptController.receiptDialog.tranInfo.remark}}</label>
+            </div>
+            <div>
+                <label>{{(receiptController.receiptDialog.tranInfo.payMethodCode == 6 ? 'receipt.productPickUp' : 'receipt.productPurchase')| translate}}</label>
+                <label>{{ uiController.language == 'en' ? receiptController.receiptDialog.cell.name : receiptController.receiptDialog.cell.nameChi}}</label>
+            </div>
+            <div *ngIf="[1,7].includes(receiptController.receiptDialog.tranInfo.payMethodCode)" >
+                <label>{{"octopus.receipt.octopusNo" | translate}}</label>
+                <label>{{ receiptController.receiptDialog.tranInfo.octCardNo}}</label>
+            </div>
+            <div *ngIf="receiptController.receiptDialog.tranInfo.schemeName && receiptController.receiptDialog.tranInfo.discount">
+                <label *ngIf="uiController.language == 'en'">{{receiptController.receiptDialog.tranInfo.schemeName[0]}}</label>
+                <label *ngIf="uiController.language == 'zh'">{{receiptController.receiptDialog.tranInfo.schemeName[1]}}</label>
+                <label>- $ {{receiptController.receiptDialog.tranInfo.discount.toFixed(1)}}</label>
+            </div>
+            <div *ngIf="receiptController.receiptDialog.tranInfo.payMethodCode != 6">
+                <label>{{"receipt.amountDeducted" | translate}}</label>
+                <label>- $ {{receiptController.receiptDialog.tranInfo.amount.toFixed(1)}}</label>
+            </div>
+            <div *ngIf="[1,7].includes(receiptController.receiptDialog.tranInfo.payMethodCode) &&
+                (receiptController.receiptDialog.tranInfo.remainingValue || receiptController.receiptDialog.tranInfo.remainingValue == 0) &&
+                receiptController.receiptDialog.tranInfo.octCardType != 1" >
+                <label>{{"receipt.remainingValue" | translate}}</label>
+                <label>$ {{receiptController.receiptDialog.tranInfo.remainingValue.toFixed(1)}}</label>
+            </div>
+            <div *ngIf="[1,7].includes(receiptController.receiptDialog.tranInfo.payMethodCode)" >
+                <label>{{"octopus.receipt.deviceNo" | translate}}</label>
+                <label>{{receiptController.receiptDialog.tranInfo.octDeviceNo}}</label>
+            </div>
+            <div *ngIf="[2].includes(receiptController.receiptDialog.tranInfo.payMethodCode)" >
+                <label>{{"receipt.refNo" | translate}}</label>
+                <label>{{receiptController.receiptDialog.tranInfo.payRefNo}}</label>
+            </div>
+            <div class="receiptRemark" *ngIf="[1,7].includes(receiptController.receiptDialog.tranInfo.payMethodCode) &&
+                (receiptController.receiptDialog.tranInfo.octLavType == 1 || receiptController.receiptDialog.tranInfo.octLavType ==2 || receiptController.receiptDialog.tranInfo.octLavType ==4) ">
+                <div *ngIf="uiController.language == 'zh'">
+                    {{"octopus.receipt.lastAdd" | translate}} {{receiptController.receiptDialog.tranInfo.octLavDate}} {{"octopus.receipt.lastAddType."+receiptController.receiptDialog.tranInfo.octLavType | translate}}
+                </div>
+                <div *ngIf="uiController.language == 'en'">
+                    {{"octopus.receipt.lastAdd" | translate}}  {{"octopus.receipt.lastAddType."+receiptController.receiptDialog.tranInfo.octLavType | translate}} {{receiptController.receiptDialog.tranInfo.octLavDate}}
+                </div>
+            </div>
+        </div>
+        <div class="receiptFooter">
+            <label class="printData" *ngIf="receiptController.receiptDialog.printData && uiController.language == 'zh'"
+            [innerHTML]="receiptController.receiptDialog.printDataChi"
+            >
+            </label>
+            <label class="printData" *ngIf="receiptController.receiptDialog.printData && uiController.language == 'en'"
+            [innerHTML]="receiptController.receiptDialog.printData"
+            >
+            </label>
+            <!--<div class="qrCode">-->
+            <!--{{"thankyou" | translate}} !-->
+            <!--<label>{{"scanToGetReceipt" | translate}}</label>-->
+            <!--<qrcode [qrdata]="receiptController.receiptDialog.receiptQrCode" *ngIf="receiptController.receiptDialog.receiptQrCode" [width]="200"></qrcode>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div [ngClass]="'vendingStatusWaiting'+uiController.displayMode" *ngIf="vendingMachineController.waitingDialog">
+    <label>{{uiController.language=='en'?  vendingMachineController.waitingDialog.message : vendingMachineController.waitingDialog.messageChi}}</label>
+    </div>
+    <div [ngClass]="'vendingStatusFail'+uiController.displayMode" *ngIf="vendingMachineController.failDialog">
+    <label>{{uiController.language=='en'?  vendingMachineController.failDialog.message : vendingMachineController.failDialog.messageChi}}</label>
+    </div>
+    <div [ngClass]="'vendingStatusSuccess'+uiController.displayMode" *ngIf="vendingMachineController.successDialog">
+    <label>{{uiController.language=='en'?  vendingMachineController.successDialog.message : vendingMachineController.successDialog.messageChi}}</label>
+    </div>
+    </div>
+    <!--End of Receipt Dialog-->
+    <!--Octopus Enquiry Dialog-->
+    <div  [ngClass]="'productDialog'+uiController.displayMode" *ngIf="octopusEnquiryController.octopusEnquiryDialog">
+    <div [ngClass]="'statusBar'+uiController.displayMode">
+        <div *ngIf="!octopusEnquiryController.octopusEnquiryDialog.askRetry && !octopusEnquiryController.octopusEnquiryDialog.enquiryResult" class="returnButton" (click)="octopusEnquiryController.tryToCloseEnquiryDialog()" >
+        <fa-icon [icon]="faChevronLeft"></fa-icon>
+        {{"closeDialog" | translate}}
+    </div>
+    <div *ngIf="!octopusEnquiryController.octopusEnquiryDialog.askRetry && octopusEnquiryController.octopusEnquiryDialog.enquiryResult" class="returnButton" (click)="octopusEnquiryController.closeEnquiryDialog()" >
+    <fa-icon [icon]="faChevronLeft"></fa-icon>
+    {{"closeDialog" | translate}}
+    </div>
+    <div class="countdownTimer">
+        <fa-icon [icon]="faClockRotateLeft"></fa-icon>
+        <label>{{octopusEnquiryController.octopusEnquiryDialog.countdown}} s</label>
+    </div>
+    </div>
+    <div class="productPageLoader"  *ngIf="!octopusEnquiryController.octopusEnquiryDialog.inited && !octopusEnquiryController.octopusEnquiryDialog.message"> </div>
+    <div [ngClass]="'octopusEnquiryDialog'+uiController.displayMode" *ngIf="!octopusEnquiryController.octopusEnquiryDialog.inited && octopusEnquiryController.octopusEnquiryDialog.message">
+    <label>{{uiController.language == 'en' ? octopusEnquiryController.octopusEnquiryDialog.message : octopusEnquiryController.octopusEnquiryDialog.messageChi}}</label>
+    <div *ngIf="octopusEnquiryController.octopusEnquiryDialog.askRetry">
+        <button (click)="octopusEnquiryController.handleEnquiry3Retry()" > {{uiController.language == 'en' ? "Yes": "是"}}</button>
+        <button (click)="octopusEnquiryController.handleEnquiry3notRetry()">{{uiController.language == 'en' ? "Cancel": "取消"}}</button>
+    </div>
+    </div>
+    <div [ngClass]="'octopusEnquiryDialog'+uiController.displayMode" *ngIf="octopusEnquiryController.octopusEnquiryDialog.inited && octopusEnquiryController.octopusEnquiryDialog.enquiryResult">
+    <div [ngClass]="'octopusEnquiryDialogTitle'+uiController.displayMode">
+        {{"octopus.enquiry.title" | translate}}
+    </div>
+    <div class="octopusEnquiryDialogBasic">
+        <label>{{"octopus.enquiry.cardID"|translate}}: {{octopusEnquiryController.octopusEnquiryDialog.enquiryResult.cardID}}</label>
+        <label *ngIf="octopusEnquiryController.octopusEnquiryDialog.enquiryResult.cardType != 1">
+        {{"octopus.enquiry.remainingValue"|translate}}: ${{octopusEnquiryController.octopusEnquiryDialog.enquiryResult.remainingValue}}
+        </label>
+    </div>
+    <table class="transactionTable">
+        <tr>
+            <th>{{"octopus.enquiry.no"|translate}}</th>
+            <th>{{"octopus.enquiry.tranDttm"|translate}}</th>
+            <!--Transation Time-->
+            <th>{{"octopus.enquiry.amount"|translate}}</th>
+            <th>{{"octopus.enquiry.devId"|translate}}</th>
+            <!--Device Number-->
+        </tr>
+        <tr *ngFor="let history of octopusEnquiryController.octopusEnquiryDialog.enquiryResult.historys; let idx  = index">
+            <td>{{idx+1}} {{history.sameDevice ? '#' : ''}}</td>
+            <td>{{history.tranDttm}}</td>
+            <td>{{history.amount}}</td>
+            <td>{{history.devId}}</td>
+        </tr>
+    </table>
+    </div>
+    </div>
+    <!--End of Octopus Enquiry Dialog-->
+    </div>
+    <!--End of Area showing products-->
+    </div>
+    <!--End of Product Page-->
+    <div class="adminPage" *ngIf="loaded && adminController.passwordPage.displayed">
+        <div class="adminPageStatusBar">
+            <div class="adminPageReturnButton" (click)="adminController.closePasswordPage()">
+                <fa-icon [icon]="faXmark"></fa-icon>
+            </div>
+        </div>
+        <div class="adminPageStatusBar">
+            <div  class="adminCountdownTimer">
+                <fa-icon [icon]="faClockRotateLeft"></fa-icon>
+                <label>{{adminController.passwordPage.closeCountdown}} s</label>
+            </div>
+        </div>
+        <label class="adminPageHeader">Please Enter Admin Password </label>
+        <label class="adminPageHeader">請輸入管理者密碼 </label>
+        <label class="adminPageDescription" *ngIf="adminController.passwordPage.lock"> Too many attempts, please retry again later. </label>
+        <label class="adminPageDescription" *ngIf="adminController.passwordPage.lock"> 嘗試次數過多, 請稍候再試。</label>
+        <label class="adminPageDescription" *ngIf="!adminController.passwordPage.lock && adminController.passwordPage.retryTimeLeft < adminController.passwordPage.retryLimit">The password is incorrect. Please try again ({{ adminController.passwordPage.retryTimeLeft}} attempts left). </label>
+        <label class="adminPageDescription" *ngIf="!adminController.passwordPage.lock && adminController.passwordPage.retryTimeLeft < adminController.passwordPage.retryLimit">密碼錯誤, 還剩 {{ adminController.passwordPage.retryTimeLeft}} 次嘗試機會。 </label>
+        <div class="inputPasswordArea" *ngIf="!adminController.passwordPage.lock">
+            <label>{{adminController.getHiddenPassword()}}</label>
+        </div>
+        <table class="keyboardContainer"  *ngIf="!adminController.passwordPage.lock">
+            <tbody>
+                <tr class="keyRow">
+                    <td class="key"><button (click)="adminController.inputPassword('1')">1</button></td>
+                    <td class="key"><button (click)="adminController.inputPassword('2')">2</button></td>
+                    <td class="key"><button (click)="adminController.inputPassword('3')">3</button></td>
+                    <td class="functionKey">
+                        <button (click)="adminController.deletePassword()">
+                            <fa-icon [icon]="faDeleteLeft"></fa-icon>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="keyRow">
+                    <td class="key"><button (click)="adminController.inputPassword('4')">4</button></td>
+                    <td class="key"><button (click)="adminController.inputPassword('5')">5</button></td>
+                    <td class="key"><button (click)="adminController.inputPassword('6')">6</button></td>
+                    <td class="functionKey"><button (click)="adminController.clearPassword()">Clear</button></td>
+                </tr>
+                <tr class="keyRow">
+                    <td class="key"><button (click)="adminController.inputPassword('7')">7</button></td>
+                    <td class="key"><button (click)="adminController.inputPassword('8')">8</button></td>
+                    <td class="key"><button (click)="adminController.inputPassword('9')">9</button></td>
+                    <td [rowSpan]="2" class="enter"><button (click)="adminController.validatePassword()">Enter</button></td>
+                </tr>
+                <tr class="keyRow">
+                    <td class="key"><button (click)="adminController.inputPassword('*')">*</button></td>
+                    <td class="key"><button (click)="adminController.inputPassword('0')">0</button></td>
+                    <td class="key"><button (click)="adminController.inputPassword('#')">#</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="adminPage" *ngIf="loaded && adminController.adminPanel.displayed">
+        <div class="adminPageStatusBar">
+            <div class="adminPageReturnButton" (click)="adminController.closeAdminPanel()">
+                <fa-icon [icon]="faXmark"></fa-icon>
+            </div>
+        </div>
+        <div class="adminPageStatusBar">
+            <div  class="adminCountdownTimer">
+                <fa-icon [icon]="faClockRotateLeft"></fa-icon>
+                <label>{{adminController.adminPanel.closeCountdown}} s</label>
+            </div>
+        </div>
+        <div class="customMessagePage" *ngIf="adminController.adminPanel.octopus3CustomMessageTextBar">
+            <div>Please Enter the Custom Message ID </div>
+            <input type="text" [(ngModel)]="adminController.adminPanel.octopus3CustomMessageId">
+            <button (click)="adminController.setCustomMessageId(adminController.adminPanel.octopus3CustomMessageId)">Confirm</button>
+        </div>
+        <div class="customMessagePage" *ngIf="adminController.adminPanel.octopus3SchemeEnquiryResult">
+            <h2>Promotion</h2>
+            <ul>
+                <li *ngFor="let promotion of adminController.adminPanel.octopus3SchemeEnquiryResult">
+                    <!--Display each promotion's English and Chinese names -->
+                    <strong>{{ promotion[0] }}</strong>  {{ promotion[1] }}
+                </li>
+            </ul>
+        </div>
+        <div class="adminPanelMenuContainer" *ngIf="!adminController.adminPanel.octopus3CustomMessageTextBar && !adminController.adminPanel.octopus3SchemeEnquiryResult">
+            <div class="adminPanelMenu">
+                <button (click)="adminController.handleOctopusEnquiry()">
+                    <div>Octopus Card Enquiry</div>
+                    <div>查閱八達通卡</div>
+                </button>
+                <button (click)="adminController.handleUnlockWashingMachine()">
+                    <div>Unlock Washing Machines</div>
+                    <div>解鎖洗衣機/乾衣機</div>
+                </button>
+            </div>
+            <div class="adminPanelMenu">
+                <button (click)="adminController.octopusV2()">
+                    <div>Octopus V2 </div>
+                    <div>八達通 V2</div>
+                </button>
+                <button (click)="adminController.octopusV3()">
+                    <div>Octopus V3 </div>
+                    <div>八達通 V3 </div>
+                </button>
+            </div>
+            <div class="adminPanelMenu">
+                <button (click)="adminController.openTextBarForInputCustomMessage()">
+                    <div>Octopus V3 Custom Message</div>
+                </button>
+                <button (click)="adminController.octopusV3SchemeEnquiry()">
+                    <div>Octopus V3 Scheme Enquiry</div>
+                    <div>八達通優惠查詢</div>
+                </button>
+            </div>
+            <!-- <div class="adminPanelMenu">-->
+            <!-- <button>-->
+            <!-- <div>Rotate Screen </div>-->
+            <!-- <div>校正屏幕</div>-->
+            <!-- </button>-->
+            <!-- <button>-->
+            <!-- <div>Test Touch Screen</div>-->
+            <!-- <div> 測試屏幕觸控 </div>-->
+            <!-- </button>-->
+            <!-- </div>-->
+            <div class="adminPanelMenu">
+                <button (click)="adminController.handleReboot()">
+                    <div> Reboot </div>
+                    <div> 重啟系統  </div>
+                </button>
+                <button (click)="adminController.handlePowerOff()">
+                    <div> Power off </div>
+                    <div> 關閉系統</div>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
